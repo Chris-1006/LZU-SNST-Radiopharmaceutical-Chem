@@ -1,0 +1,118 @@
+% ----------------------------------------------------- 
+% 引入所需的宏包
+\usepackage{tikz} % 用于绘图
+\usetikzlibrary{calc} % 计算库
+\usepackage{eso-pic} % 用于添加背景图片
+\AddToShipoutPictureBG{%
+  \begin{tikzpicture}[overlay,remember picture]
+    \draw[line width=0.6pt] % 设置边框线的粗细
+    ($ (current page.north west) + (0.6cm,-0.6cm) $) % 边框左上角位置
+    rectangle
+    ($ (current page.south east) + (-0.6cm,0.6cm) $); % 边框右下角位置
+  \end{tikzpicture}}
+
+% 设置章节编号深度
+\setcounter{secnumdepth}{2} % 包含 subsection 编号
+
+% 修改 subsection 编号格式为 1.1, 1.2 等
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+
+% 定义颜色
+\usepackage{xcolor}
+\definecolor{c1}{HTML}{4F80BC} % 目录颜色
+\definecolor{c2}{RGB}{190,20,83} % 引用颜色
+
+% 设置中文支持
+\usepackage{ctex}
+
+% 设置页面布局
+\usepackage[a4paper,top=28mm,bottom=28mm,left=15mm,right=15mm]{geometry}
+
+% 引入超链接包
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks, % 设置链接颜色
+  linktoc = section, % 超链接位置，选项有 section, page, all
+  linkcolor = c1, % 链接颜色
+  citecolor = c1 % 引用颜色
+}
+
+% 引入其他常用宏包
+\usepackage{amsmath,enumerate,multirow,float} % 数学、列表和表格
+\usepackage{tabularx} % 可变宽度表格
+\usepackage{tabu} % 扩展表格功能
+\usepackage{subfig} % 支持子图
+\usepackage{fancyhdr} % 自定义页眉页脚
+\usepackage{graphicx} % 图形处理
+\usepackage{wrapfig} % 图片环绕文本
+\usepackage{physics} % 物理符号
+\usepackage{appendix} % 附录处理
+\usepackage{amsfonts} % 数学字体
+\usepackage{lastpage} % 引入lastpage宏包，用于获取总页数
+
+% 自定义彩色盒子
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable} % 加载skins和breakable库
+\newtcolorbox{tbox}[2][]{
+  colframe=black!70!, % 边框颜色
+  breakable, % 允许跨页
+  enhanced, % 增强功能
+  boxrule =0.5pt, % 边框线宽
+  title = {#2}, % 盒子标题
+  fonttitle = \large\kaishu\bfseries, % 标题字体
+  drop fuzzy shadow, % 阴影效果
+  #1 % 额外选项
+}
+
+% 页眉页脚设置
+\fancypagestyle{plain}{\pagestyle{fancy}} % 设置页面样式
+\pagestyle{fancy} % 应用自定义样式
+\fancyhf{} % 清空当前的页眉和页脚
+\fancyhead[C]{\textbf{\nouppercase{\leftmark}}} % 中间页眉显示章节名称（无大写）
+
+% 设置页脚为当前页数/总页数格式
+\fancyfoot[C]{\thepage\ / \pageref{LastPage}} % 页脚，中间显示 "当前页数/总页数"
+
+% 保留章节编号
+% \renewcommand{\thesection}{} % 不再去掉章节编号
+
+% 设置目录名称
+\renewcommand{\contentsname}{\centerline{\huge 目录}} % 目录标题居中显示
+
+% 设置章节标题格式
+\usepackage{titlesec}
+\usepackage{titletoc}
+\titleformat{\section}{\centering\Large}{}{1em}{} % 设置章节标题格式
+
+% listing代码环境设置
+\usepackage{listings} % 引入代码高亮包
+\lstloadlanguages{python} % 加载Python语言
+\lstdefinestyle{pythonstyle}{
+  backgroundcolor=\color{gray!5}, % 背景颜色
+  language=python, % 代码语言
+  frameround=tftt, % 圆角框
+  frame=shadowbox, % 框类型
+  keepspaces=true, % 保持空格
+  breaklines, % 自动换行
+  columns=spaceflexible, % 列宽自适应
+  basicstyle=\ttfamily\small, % 基本文本设置，字体为teletype，大小为小号
+  keywordstyle=[1]\color{c1}\bfseries, % 关键词样式
+  keywordstyle=[2]\color{Red!70!black}, % 关键词样式
+  stringstyle=\color{Purple}, % 字符串样式
+  showstringspaces=false, % 不显示字符串中的空格
+  commentstyle=\ttfamily\scriptsize\color{green!40!black}, % 注释样式
+  tabsize=2, % 制表符宽度
+  morekeywords={as}, % 更多关键词
+  morekeywords=[2]{np, plt, sp}, % 更多关键词
+  numbers=left, % 代码行数显示在左边
+  numberstyle=\it\tiny\color{gray}, % 行号样式
+  stepnumber=1, % 每行显示行号
+  rulesepcolor=\color{gray!30!white} % 规则分隔颜色
+}
+
+% 定义度数符号
+\def\degree{${}^{\circ}$}
+
+% 设置图片路径
+\graphicspath{{./images/}} % 图片相对路径
+\allowdisplaybreaks[4] % 允许公式跨页
